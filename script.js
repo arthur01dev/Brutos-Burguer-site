@@ -7,6 +7,7 @@ const checkoutBtn = document.querySelector('#checkout-btn');
 const closeModalBtn = document.querySelector('#close-modal-btn');
 const cartCounter = document.querySelector('#cart-count');
 const addressInput = document.querySelector('#address');
+const addressObsInput = document.querySelector('#address-obs');
 const addressWarn = document.querySelector('#address-warn');
 
 let cart = [];
@@ -41,7 +42,6 @@ menu.addEventListener('click', (event) => {
 
 // função para adicionar ao carrinho
 function addToCart(name, price) {
-
     const existingItem = cart.find(item => item.name === name);
 
     if (existingItem) {
@@ -71,7 +71,7 @@ function updateCartModal() {
             <div>
                <p class="font-medium">${item.name}</p>
                <p>Qtd: ${item.quantity}</p>
-               <p claa="font-medium mt-2">R$ ${item.price.toFixed(2)}</p>
+               <p class="font-medium mt-2">R$ ${item.price.toFixed(2)}</p>
             </div>
 
                <button class="remove-from-cart-btn" data-name="${item.name}">
@@ -85,12 +85,14 @@ function updateCartModal() {
         cartItemsContainer.appendChild(cartItemElement);
     })
 
-    cartTotal.textContent = total.toLocaleString("pt-BR",{
+    cartTotal.textContent = total.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
     });
 
-    cartCounter.textContent = cart.length;
+    // Atualiza contador de itens no carrinho
+    const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+    cartCounter.textContent = totalItems;
 }
 
 // função para remover item do carrinho
@@ -107,8 +109,8 @@ function removeItemCart(name) {
 
     if (index !== -1) {
         const item = cart[index];
-        
-        if(item.quantity > 1) {
+
+        if (item.quantity > 1) {
             item.quantity -= 1;
             updateCartModal();
             return;
@@ -117,4 +119,75 @@ function removeItemCart(name) {
         cart.splice(index, 1);
         updateCartModal();
     }
+}
+
+addressInput.addEventListener("input", (event) => {
+    let inputValue = event.target.value;
+
+    if (inputValue !== "") {
+        addressInput.classList.remove("border-red-500")
+        addressWarn.classList.add("hidden");
+    }
+
+})
+
+addressObsInput.addEventListener("input", (event) => {
+    let inputObsValue = event.target.value;
+
+    return inputObsValue;
+})
+
+checkoutBtn.addEventListener("click", () => {
+    let inputObs = addressObsInput.value;
+    const isOpen = checkRestauranteOpen();
+
+    if (!isOpen) {
+        alert("BRUTOS BURGUER ESTA FECHADO NO MOMENTO!");
+        return;
+    }
+
+    if (cart.length === 0) return;
+
+    if (addressInput.value === '') {
+        addressWarn.classList.remove("hidden");
+        addressInput.classList.add("border-red-500");
+        return;
+    }
+
+    const cartItems = cart.map((item) => {
+        return (
+            ` ${item.name}, Quantidade: (${item.quantity}), Preço: R$${item.price}. | `
+        )
+    }).join("");
+
+    const message = encodeURIComponent(cartItems);
+    const phone = "34998897373"
+
+    window.open(`https://wa.me/${phone}?text=Boa noite Brutos bruguer🍔, meu pedido é: ${message}, Observação: ${inputObs}, Endereço: ${addressInput.value}`, "_blank");
+
+    cart.length = 0;
+});
+
+function checkRestauranteOpen() {
+    const data = new Date();
+    const hora = data.getHours();
+    const minutos = data.getMinutes();
+    // Calcula o horário atual em minutos desde a meia-noite
+    const minutosDesdeMeiaNoite = hora * 60 + minutos;
+    // Define os limites de tempo em minutos desde a meia-noite
+    const aberturaEmMinutos = 18 * 60 + 30; // 18:30
+    const fechamentoEmMinutos = 23 * 60 + 45; // 23:45
+    // Verifica se o horário atual está dentro do intervalo de funcionamento
+    return minutosDesdeMeiaNoite >= aberturaEmMinutos && minutosDesdeMeiaNoite <= fechamentoEmMinutos;
+}
+
+const spanItem = document.querySelector("#date-span");
+const isOpen = checkRestauranteOpen();
+
+if (isOpen) {
+    spanItem.classList.remove("bg-red-500");
+    spanItem.classList.add("bg-green-600");
+} else {
+    spanItem.classList.remove("bg-green-600");
+    spanItem.classList.add("bg-red-500");
 }
