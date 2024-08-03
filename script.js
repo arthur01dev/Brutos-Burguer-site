@@ -55,6 +55,19 @@ function addToCart(name, price) {
     }
 
     updateCartModal();
+
+    // Mostra a notificação Toastify
+    Toastify({
+        text: `${name} foi adicionado ao carrinho!`,
+        duration: 3000,
+        close: true,
+        gravity: "top", // `top` ou `bottom`
+        position: "right", // `left`, `center` ou `right`
+        stopOnFocus: true, // Impede o fechamento do toast ao passar o mouse
+        style: {
+            background: "#4CAF50", // Cor verde para sucesso
+        }
+    }).showToast();
 }
 
 // Atualiza Carrinho
@@ -113,11 +126,38 @@ function removeItemCart(name) {
         if (item.quantity > 1) {
             item.quantity -= 1;
             updateCartModal();
+
+             // Mostra a notificação Toastify para redução de quantidade
+             Toastify({
+                text: `A quantidade de ${name} foi reduzida no carrinho.`,
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` ou `bottom`
+                position: "right", // `left`, `center` ou `right`
+                stopOnFocus: true, // Impede o fechamento do toast ao passar o mouse
+                style: {
+                    background: "#FFA500", // Cor laranja para aviso
+                }
+            }).showToast();
+
             return;
         }
 
         cart.splice(index, 1);
         updateCartModal();
+
+         // Mostra a notificação Toastify para remoção de item
+         Toastify({
+            text: `${name} foi removido do carrinho.`,
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` ou `bottom`
+            position: "right", // `left`, `center` ou `right`
+            stopOnFocus: true, // Impede o fechamento do toast ao passar o mouse
+            style: {
+                background: "#ef4444", // Cor vermelha para remoção
+            }
+        }).showToast();
     }
 }
 
@@ -142,7 +182,18 @@ checkoutBtn.addEventListener("click", () => {
     const isOpen = checkRestauranteOpen();
 
     if (!isOpen) {
-        alert("BRUTOS BURGUER ESTA FECHADO NO MOMENTO!");
+        
+        Toastify({
+            text: "Brutos burguer está fechado no momento!",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "#ef4444",
+            }}).showToast();
+
         return;
     }
 
