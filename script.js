@@ -212,7 +212,7 @@ checkoutBtn.addEventListener("click", () => {
     }).join("");
 
     const message = encodeURIComponent(cartItems);
-    const phone = "553496450498"
+    const phone = "5534998897373"
 
     window.open(`https://wa.me/${phone}?text=Boa noite Brutos bruguer🍔, meu pedido é: ${message}, Observação: ${inputObs}, Endereço: ${addressInput.value}`, "_blank");
 
