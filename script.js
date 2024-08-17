@@ -215,7 +215,7 @@ checkoutBtn.addEventListener("click", () => {
         )
     }).join("%0A");
 
-    const totalFormatted = `Total: ${total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}.%0A%0A`;
+    const totalFormatted = `Total: ${total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}.%0A`;
 
     const message = encodeURIComponent(cartItems + totalFormatted);
     const phone = "5534998897373"
