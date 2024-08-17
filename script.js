@@ -211,16 +211,16 @@ checkoutBtn.addEventListener("click", () => {
     const cartItems = cart.map((item) => {
         total += item.price * item.quantity;
         return (
-            ` ${item.name}, Quantidade: (${item.quantity}), Preço: R$${Number(item.price).toFixed(2)}. | %0A%0A`
+            ` ${item.name}, Quantidade: (${item.quantity}), Preço: R$${Number(item.price).toFixed(2)}. %0A`
         )
-    }).join("");
+    }).join("%0A");
 
     const totalFormatted = `Total: ${total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}.%0A%0A`;
 
     const message = encodeURIComponent(cartItems + totalFormatted);
     const phone = "5534998897373"
 
-    window.open(`https://wa.me/${phone}?text=Boa%20noite%20Brutos%20Bruguer🍔,%0A%0AMeu%20pedido%20é:%0A${message}%0A%0AObservação:%0A${inputObs}%0A%0AEndereço:%0A${addressInput.value}`, "_blank")
+    window.open(`https://wa.me/${phone}?text=Boa%20noite%20Brutos%20Bruguer🍔,%0A%0AMeu%20pedido%20é:%0A${message}%0A%0AObservação:%0A${encodeURIComponent(inputObs)}%0A%0AEndereço:%0A${encodeURIComponent(addressInput.value)}`, "_blank")
 
     cart.length = 0;
 });
