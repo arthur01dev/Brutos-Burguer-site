@@ -127,8 +127,8 @@ function removeItemCart(name) {
             item.quantity -= 1;
             updateCartModal();
 
-             // Mostra a notificação Toastify para redução de quantidade
-             Toastify({
+            // Mostra a notificação Toastify para redução de quantidade
+            Toastify({
                 text: `A quantidade de ${name} foi reduzida no carrinho.`,
                 duration: 3000,
                 close: true,
@@ -146,8 +146,8 @@ function removeItemCart(name) {
         cart.splice(index, 1);
         updateCartModal();
 
-         // Mostra a notificação Toastify para remoção de item
-         Toastify({
+        // Mostra a notificação Toastify para remoção de item
+        Toastify({
             text: `${name} foi removido do carrinho.`,
             duration: 3000,
             close: true,
@@ -181,21 +181,22 @@ checkoutBtn.addEventListener("click", () => {
     let inputObs = addressObsInput.value;
     const isOpen = checkRestauranteOpen();
 
-    if (!isOpen) {
-        
-        Toastify({
-            text: "Brutos burguer está fechado no momento!",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "#ef4444",
-            }}).showToast();
+    // if (!isOpen) {
 
-        return;
-    }
+    //     Toastify({
+    //         text: "Brutos burguer está fechado no momento!",
+    //         duration: 3000,
+    //         close: true,
+    //         gravity: "top", // `top` or `bottom`
+    //         position: "right", // `left`, `center` or `right`
+    //         stopOnFocus: true, // Prevents dismissing of toast on hover
+    //         style: {
+    //             background: "#ef4444",
+    //         }
+    //     }).showToast();
+
+    //     return;
+    // }
 
     if (cart.length === 0) return;
 
@@ -214,7 +215,7 @@ checkoutBtn.addEventListener("click", () => {
     const message = encodeURIComponent(cartItems);
     const phone = "5534998897373"
 
-    window.open(`https://wa.me/${phone}?text=Boa noite Brutos bruguer🍔, meu pedido é: ${message}, Observação: ${inputObs}, Endereço: ${addressInput.value}`, "_blank");
+    window.open(`https://wa.me/${phone}?text=Boa%20noite%20Brutos%20Bruguer🍔,%0A%0AMeu%20pedido%20é:%0A${message}%0A%0AObservação:%0A${inputObs}%0A%0AEndereço:%0A${addressInput.value}`, "_blank")
 
     cart.length = 0;
 });
