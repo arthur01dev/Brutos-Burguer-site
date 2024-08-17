@@ -211,11 +211,11 @@ checkoutBtn.addEventListener("click", () => {
     const cartItems = cart.map((item) => {
         total += item.price * item.quantity;
         return (
-            ` ${item.name}, Quantidade: (${item.quantity}), Preço: R$${Number(item.price).toFixed(2)}. %0A`
+            ` ${item.name}, Quantidade: (${item.quantity}), Preço: R$${Number(item.price).toFixed(2)}.\n\n`
         )
-    }).join("%0A");
+    }).join("");
 
-    const totalFormatted = `Total: ${total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}.%0A`;
+    const totalFormatted = `Total: ${total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}.\n\n`;
 
     const message = encodeURIComponent(cartItems + totalFormatted);
     const phone = "5534998897373"
