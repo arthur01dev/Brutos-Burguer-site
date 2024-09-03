@@ -181,22 +181,22 @@ checkoutBtn.addEventListener("click", () => {
     let inputObs = addressObsInput.value;
     const isOpen = checkRestauranteOpen();
 
-    // if (!isOpen) {
+    if (!isOpen) {
 
-    //     Toastify({
-    //         text: "Brutos burguer está fechado no momento!",
-    //         duration: 3000,
-    //         close: true,
-    //         gravity: "top", // `top` or `bottom`
-    //         position: "right", // `left`, `center` or `right`
-    //         stopOnFocus: true, // Prevents dismissing of toast on hover
-    //         style: {
-    //             background: "#ef4444",
-    //         }
-    //     }).showToast();
+        Toastify({
+            text: "Brutos burguer está fechado no momento!",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: "#ef4444",
+            }
+        }).showToast();
 
-    //     return;
-    // }
+        return;
+    }
 
     if (cart.length === 0) return;
 
